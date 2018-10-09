@@ -37,13 +37,13 @@ public:
         iterator& operator++(int);
         iterator& operator--(int);
 
-        friend bool operator==(const BinarySearchTree<KeyType, ValueType>::iterator &iterator_1, const BinarySearchTree<KeyType, ValueType>::iterator &iterator_2) {
+        friend bool operator==(const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_1, const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_2) {
             if (iterator_1.pointer == iterator_2.pointer) {
                 return true;
             }
             return false;
         }
-        friend bool operator!=(const BinarySearchTree<KeyType, ValueType>::iterator &iterator_1, const BinarySearchTree<KeyType, ValueType>::iterator &iterator_2) {
+        friend bool operator!=(const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_1, const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_2) {
             if (iterator_1.pointer != iterator_2.pointer) {
                 return true;
             }
@@ -75,6 +75,9 @@ public:
     void erase(const KeyType&);
     ValueType& search(const KeyType&) const;
 };
+
+
+#include "../src/Treap.cc"
 
 
 #endif /* TREAP_H */
