@@ -19,8 +19,8 @@ private:
         Node* parent;
     };
 
-    unsigned int size;
     Node* root;
+    unsigned int size;
 
 public:
     /* Iterator class defnition */
