@@ -22,6 +22,10 @@ private:
     Node* root;
     unsigned int size;
 
+    /* Helper functions */
+    void leftRotate(Node*);
+    void rightRotate(Node*);
+
 public:
     /* Iterator class defnition */
     class iterator {
