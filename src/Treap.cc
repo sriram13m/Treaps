@@ -8,6 +8,35 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap() : 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> &other)
 {
+    size = other.size;
+    if(other->root == nullptr)
+    {
+        root = nullptr;
+        return;
+    }
+    root = other.root;
+    Node* node_ptr = root;
+    Node* other_ptr = other.root;
+    while(other_ptr != nullptr)
+    {
+        if(other_ptr->left_child != nullptr && node_ptr->left_child == nullptr )
+        {
+            node_ptr->left_child =  other_ptr->left_child;
+            node_ptr = node_ptr->left_child;
+            other_ptr = other_ptr->left_child;
+        }
+        else if(other_ptr->right_child != nullptr && node_ptr->right_child == nullptr)
+        {
+            node_ptr->right_child =  other_ptr->right_child;
+            node_ptr = node_ptr->right_child;
+            other_ptr = other_ptr->right_child;
+        }
+        else
+        {
+            node_ptr = node_ptr->parent;
+            other_ptr = other_ptr->parent;
+        }
+    }
 
 }
 
@@ -34,7 +63,37 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::~Treap()
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::operator=(Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> other)
 {
-    // TODO : Implement this
+    size = other.size;
+    if(other->root == nullptr)
+    {
+        root = nullptr;
+    }
+    else
+    {
+        root = other->root;
+        Node* node_ptr = root;
+        Node* other_ptr = other.root;
+        while(other_ptr != nullptr)
+        {
+            if(other_ptr->left_child != nullptr && node_ptr->left_child == nullptr )
+            {
+                node_ptr->left_child =  other_ptr->left_child;
+                node_ptr = node_ptr->left_child;
+                other_ptr = other_ptr->left_child;
+            }
+            else if(other_ptr->right_child != nullptr && node_ptr->right_child == nullptr)
+            {
+                node_ptr->right_child =  other_ptr->right_child;
+                node_ptr = node_ptr->right_child;
+                other_ptr = other_ptr->right_child;
+            }
+            else
+            {
+                node_ptr = node_ptr->parent;
+                other_ptr = other_ptr->parent;
+            }
+        }
+    }
 }
 
 
@@ -55,7 +114,10 @@ bool Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::isEmp
     }
     return false;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9321e826daef9a25dc63584621be0951766de6e
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>

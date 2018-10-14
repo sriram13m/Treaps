@@ -17,6 +17,20 @@ private:
         Node* left_child;
         Node* right_child;
         Node* parent;
+        Node(KeyType key, ValueType value, PriorityType priority):key(key),
+        value(value),
+        priority(priority)
+        {};
+        Node(const Node& other)
+        {
+            key = other.key;
+            value = other.value;
+            priority = other.priority;
+            left_child = other.left_child;
+            right_child = other.right_child;
+            parent = other.parent;
+        }
+
     };
 
     Node* root;
