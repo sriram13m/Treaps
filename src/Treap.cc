@@ -29,7 +29,7 @@ template<typename KeyType, typename ValueType, typename PriorityType, class KeyC
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> &other)
 {
     size = other.size;
-    if(other->root == nullptr)
+    if(other.root == nullptr)
     {
         root = nullptr;
         return;
@@ -84,13 +84,13 @@ template<typename KeyType, typename ValueType, typename PriorityType, class KeyC
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::operator=(Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> other)
 {
     size = other.size;
-    if(other->root == nullptr)
+    if(other.root == nullptr)
     {
         root = nullptr;
     }
     else
     {
-        root = other->root;
+        root = other.root;
         Node* node_ptr = root;
         Node* other_ptr = other.root;
         while(other_ptr != nullptr)
@@ -114,6 +114,7 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>& Treap<KeyT
             }
         }
     }
+    return *this;
 }
 
 
@@ -379,4 +380,45 @@ typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::i
 	}
 
 	return iterator(tree_iterator);
+}
+
+
+
+/* Modifiers */
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::insert(const KeyType &key, ValueType &&value, const PriorityType &priority)
+{
+    // TODO : Implement this
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::erase(const KeyType &key)
+{
+    // TODO : Implement this
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+ValueType& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::search(const KeyType &key) const
+{
+    // TODO : Implement this
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::merge(Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> &&other)
+{
+    // TODO : Implement this
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+std::pair<Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>, Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>> Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split()
+{
+    // TODO : Implement this
 }

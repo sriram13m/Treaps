@@ -68,7 +68,7 @@ public:
     /* Modifiers */
     void merge(Treap&&);
     std::pair<Treap, Treap> split();
-    void insert(const KeyType&, ValueType value);
+    void insert(const KeyType&, ValueType&&, const PriorityType&);
     void erase(const KeyType&);
     ValueType& search(const KeyType&) const;
 };
