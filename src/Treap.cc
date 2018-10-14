@@ -114,11 +114,6 @@ bool Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::isEmp
     }
     return false;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> c9321e826daef9a25dc63584621be0951766de6e
-
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::leftRotate(Node *node)
