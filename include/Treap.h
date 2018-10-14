@@ -11,8 +11,8 @@ class Treap
 private:
     struct Node
     {
-        KeyType Key;
-        ValueType Value;
+        KeyType key;
+        ValueType value;
         PriorityType priority;
         Node* left_child;
         Node* right_child;
