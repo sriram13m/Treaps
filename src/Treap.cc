@@ -1,3 +1,23 @@
+/* Node defnition */
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node(KeyType &key, ValueType &value, PriorityType &priority) : key(key), value(value), priority(priority)
+{}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node &other)
+{
+    key = other.key;
+    value = other.value;
+    priority = other.priority;
+    left_child = other.left_child;
+    right_child = other.right_child;
+    parent = other.parent;
+}
+/* End Node defnition */
+
+
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap() : root(nullptr), size(0)
@@ -200,6 +220,22 @@ template<typename KeyType, typename ValueType, typename PriorityType, class KeyC
 const ValueType& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::iterator::operator*() const
 {
     return pointer->value;
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+bool Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::iterator::operator==(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::iterator &other) const
+{
+    return (other.pointer == this->pointer);
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+bool Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::iterator::operator!=(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::iterator &other) const
+{
+    return (other.pointer != this->pointer);
 }
 
 

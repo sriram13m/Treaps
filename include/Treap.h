@@ -17,20 +17,8 @@ private:
         Node* left_child;
         Node* right_child;
         Node* parent;
-        Node(KeyType key, ValueType value, PriorityType priority):key(key),
-        value(value),
-        priority(priority)
-        {};
-        Node(const Node& other)
-        {
-            key = other.key;
-            value = other.value;
-            priority = other.priority;
-            left_child = other.left_child;
-            right_child = other.right_child;
-            parent = other.parent;
-        }
-
+        Node(KeyType&, ValueType&, PriorityType&);
+        Node(const Node&);
     };
 
     Node* root;
@@ -50,23 +38,14 @@ public:
         iterator(Node*);
 
         const ValueType& operator*() const;
+
         iterator& operator++();
         iterator& operator--();
         iterator& operator++(int);
         iterator& operator--(int);
 
-        friend bool operator==(const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_1, const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_2) {
-            if (iterator_1.pointer == iterator_2.pointer) {
-                return true;
-            }
-            return false;
-        }
-        friend bool operator!=(const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_1, const typename Treap<KeyType, ValueType, PriorityType>::iterator &iterator_2) {
-            if (iterator_1.pointer != iterator_2.pointer) {
-                return true;
-            }
-            return false;
-        }
+        bool operator==(const iterator&) const;
+        bool operator!=(const iterator&) const;
     };
 
     /* Constructors & Destructors */
