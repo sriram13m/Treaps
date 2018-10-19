@@ -17,7 +17,7 @@ private:
         Node* left_child;
         Node* right_child;
         Node* parent;
-        Node(KeyType&, ValueType&, PriorityType&);
+        Node(const KeyType&, ValueType&&, const PriorityType&, Node*, Node*, Node*);
         Node(const Node&);
     };
 
@@ -27,6 +27,15 @@ private:
     /* Helper functions */
     void leftRotate(Node*);
     void rightRotate(Node*);
+    
+    void splitHelper(Node*, const KeyType&);
+
+    // Helper Variables
+    Node *left_treap_root;
+    Node *right_treap_root;
+
+    // Private ctor for use by split function
+    Treap(Node*);
 
 public:
     /* Iterator class defnition */
@@ -67,7 +76,7 @@ public:
 
     /* Modifiers */
     void merge(Treap&&);
-    std::pair<Treap, Treap> split();
+    std::pair<Treap, Treap> split(const KeyType&);
     void insert(const KeyType&, ValueType&&, const PriorityType&);
     void erase(const KeyType&);
     ValueType& search(const KeyType&) const;

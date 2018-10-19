@@ -1,6 +1,6 @@
 /* Node defnition */
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
-Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node(KeyType &key, ValueType &value, PriorityType &priority) : key(key), value(value), priority(priority)
+Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node(const KeyType &key, ValueType &&value, const PriorityType &priority, Node *left_child, Node *right_child, Node *parent) : key(key), value(value), priority(priority), left_child(left_child), right_child(right_child), parent(parent)
 {}
 
 
@@ -19,6 +19,7 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node
 
 
 
+// ctors and dtors
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap() : root(nullptr), size(0)
 {}
@@ -69,6 +70,15 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap(Trea
     size = other.size;
     other.root = nullptr;
     other.size = 0;
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Treap(typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node *node)
+{
+    root = node;
+    size = 1;
 }
 
 
@@ -134,70 +144,6 @@ bool Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::isEmp
         return true;
     }
     return false;
-}
-
-template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
-void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::leftRotate(Node *node)
-{
-    auto parent = node->parent;
-    auto A = node;
-    auto B = node->right_child;
-    auto y = B->left_child;
-
-    if (parent) {
-        if (parent->left_child == A) {
-            parent->left_child = B;
-        }
-        else {
-            parent->right_child = B;
-        }
-    }
-    else {
-        root = B;
-    }
-
-    A->right_child = y;
-    if (y) {
-        y->parent = A;
-    }
-
-    B->left_child = A;
-    A->parent = B;
-
-    B->parent = parent;
-}
-
-
-
-template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
-void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::rightRotate(Node *node)
-{
-    auto parent = node->parent;
-    auto A = node;
-    auto B = node->left_child;
-    auto y = B->right_child;
-
-    if (parent) {
-        if (parent->left_child == A) {
-            parent->left_child = B;
-        }
-        else {
-            parent->right_child = B;
-        }
-    }
-    else {
-        root = B;
-    }
-
-    A->left_child = y;
-    if (y) {
-        y->parent = A;
-    }
-
-    B->right_child = A;
-    A->parent = B;
-
-    B->parent = parent;
 }
 
 
@@ -418,7 +364,111 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::merge
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
-std::pair<Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>, Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>> Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split()
+std::pair<Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>, Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>> Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split(const KeyType &key)
 {
-    // TODO : Implement this
+    left_treap_root = nullptr;
+    right_treap_root = nullptr;
+    splitHelper(root, key);
+    return {{left_treap_root}, {right_treap_root}};
+}
+
+
+
+/* Helper Functions */
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::leftRotate(Node *node)
+{
+    auto parent = node->parent;
+    auto A = node;
+    auto B = node->right_child;
+    auto y = B->left_child;
+
+    if (parent) {
+        if (parent->left_child == A) {
+            parent->left_child = B;
+        }
+        else {
+            parent->right_child = B;
+        }
+    }
+    else {
+        root = B;
+    }
+
+    A->right_child = y;
+    if (y) {
+        y->parent = A;
+    }
+
+    B->left_child = A;
+    A->parent = B;
+
+    B->parent = parent;
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::rightRotate(Node *node)
+{
+    auto parent = node->parent;
+    auto A = node;
+    auto B = node->left_child;
+    auto y = B->right_child;
+
+    if (parent) {
+        if (parent->left_child == A) {
+            parent->left_child = B;
+        }
+        else {
+            parent->right_child = B;
+        }
+    }
+    else {
+        root = B;
+    }
+
+    A->left_child = y;
+    if (y) {
+        y->parent = A;
+    }
+
+    B->right_child = A;
+    A->parent = B;
+
+    B->parent = parent;
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::splitHelper(Node *split_root, const KeyType &split_key)
+{
+    if (split_root == nullptr) {
+        return;
+    }
+    else if (split_key <= split_root->key) {
+        auto child = split_root->right_child;
+
+        split_root->parent = left_treap_root;
+        split_root->right_child = nullptr;
+
+        child->parent = right_treap_root;
+
+        left_treap_root = split_root;
+        splitHelper(child, split_key);
+        left_treap_root = split_root;
+    }
+    else {
+        auto child = split_root->left_child;
+
+        split_root->parent = right_treap_root;
+        split_root->left_child = nullptr;
+
+        child->parent = left_treap_root;
+
+        right_treap_root = split_root;
+        splitHelper(child, split_key);
+        right_treap_root = split_root;
+    }
 }
