@@ -473,13 +473,15 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split
     if (split_root == nullptr) {
         return;
     }
-    else if (split_key <= split_root->key) {
+    else if (split_root->key <= split_key) {
         auto child = split_root->right_child;
 
         split_root->parent = left_treap_root;
         split_root->right_child = nullptr;
 
-        child->parent = right_treap_root;
+        if (child) {
+            child->parent = right_treap_root;
+        }
 
         left_treap_root = split_root;
         splitHelper(child, split_key);
@@ -559,9 +561,12 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::inser
         if (parent != nullptr) {
             (node_hook == parent->left_child) ? parent->left_child = it : parent->right_child = it;
         }
+        else {
+            root = it;
+        }
     }
     else {
-        if (node->value < it->key) {
+        if (node->key < it->key) {
             insertHelper(node->right_child, it);
         }
         else {
