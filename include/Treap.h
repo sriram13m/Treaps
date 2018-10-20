@@ -29,6 +29,9 @@ private:
     void rightRotate(Node*);
     
     void splitHelper(Node*, const KeyType&);
+    Node* mergeHelper(Node*, Node*, Node*);
+    
+    void insertHelper(Node*&, Node*);
 
     // Helper Variables
     Node *left_treap_root;

@@ -334,7 +334,7 @@ typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::i
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::insert(const KeyType &key, ValueType &&value, const PriorityType &priority)
 {
-    // TODO : Implement this
+    insertHelper(root, new Node{key, std::move(value), priority, nullptr, nullptr, nullptr});
 }
 
 
@@ -358,7 +358,15 @@ ValueType& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>:
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::merge(Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> &&other)
 {
-    // TODO : Implement this
+    if (root->key <= other.root->key) {
+        left_treap_root = root;
+        right_treap_root = other.root;
+    }
+    else {
+        right_treap_root = root;
+        left_treap_root = other.root;
+    }
+    this->root = mergeHelper(right_treap_root, left_treap_root, right_treap_root);
 }
 
 
@@ -465,10 +473,81 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split
         split_root->parent = right_treap_root;
         split_root->left_child = nullptr;
 
-        child->parent = left_treap_root;
+        if (child) {
+            child->parent = left_treap_root;
+        }
 
         right_treap_root = split_root;
         splitHelper(child, split_key);
         right_treap_root = split_root;
+    }
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node* Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::mergeHelper(Node *node, Node *left_treap_root, Node *right_treap_root)
+{
+    if (left_treap_root == nullptr || right_treap_root == nullptr) {
+        if (left_treap_root == nullptr) {
+            return right_treap_root;
+        }
+        else {
+            return left_treap_root;
+        }
+    }
+    else if (left_treap_root->priority > right_treap_root->priority) {
+        auto merged_subtree_root = mergeHelper(left_treap_root->right_child, right_treap_root);
+        left_treap_root->right_child = merged_subtree_root;
+        merged_subtree_root->parent = left_treap_root;
+        return left_treap_root;
+    }
+    else {
+        auto merged_subtree_root = mergeHelper(left_treap_root, right_treap_root->right_child);
+        right_treap_root->left_child = merged_subtree_root;
+        merged_subtree_root->parent = right_treap_root;
+        return right_treap_root;
+    }
+}
+
+
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::insertHelper(Node *&node, Node *it)
+{
+    if (!node) {
+        node = it;
+    }
+    else if (it->priority > node->priority) {
+        auto parent = node->parent;
+        auto node_hook = node;
+        
+        left_treap_root = it->left_child;
+        right_treap_root = it->right_child;
+        
+        splitHelper(node, it->key);
+        
+        it->left_child = left_treap_root;
+        if (left_treap_root != nullptr) {
+            left_treap_root->parent = it;
+        }
+        
+        it->right_child = right_treap_root;
+        if (right_treap_root != nullptr) {
+            right_treap_root->parent = it;
+        }
+        
+        it->parent = parent;
+        if (parent != nullptr) {
+            (node_hook == parent->left_child) ? parent->left_child = it : parent->right_child = it;
+        }
+    }
+    else {
+        if (node->value < it->key) {
+            insertHelper(node->right_child, it);
+        }
+        else {
+            insertHelper(node->left_child, it);
+        }
     }
 }
