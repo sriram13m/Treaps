@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <functional>
+#include <stdexcept>
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare = std::less<KeyType>, class PriorityCompare = std::less<PriorityType>>
