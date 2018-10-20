@@ -23,7 +23,12 @@ int main()
             break;
         case 3:
             cin >> key;
-            cout << boolalpha << key << endl;
+            try {
+                cout << boolalpha << t.search(key) << endl;
+            }
+            catch (const char *e) {
+                cout << e << endl;
+            }
             break;
         case 4:
             t1 = t;

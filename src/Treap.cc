@@ -350,7 +350,24 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::erase
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 ValueType& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::search(const KeyType &key) const
 {
-    // TODO : Implement this
+    Node *node = this->root;
+
+	while (node) {
+		if (key == node->key) {
+			return node->value;
+		}
+		if (key < node->key) {
+			node = node->left_child;
+			continue;
+		}
+		if (key > node->key) {
+			node = node->right_child;
+			continue;
+		}
+		break;
+	}
+
+	throw "Element not found";
 }
 
 
