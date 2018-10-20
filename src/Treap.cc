@@ -90,6 +90,7 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::~Treap()
 }
 
 
+
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::operator=(Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare> other)
 {
@@ -503,7 +504,7 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::split
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
-typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node* Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::mergeHelper(Node *node, Node *left_treap_root, Node *right_treap_root)
+typename Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node* Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::mergeHelper(Node *left_treap_root, Node *right_treap_root)
 {
     if (left_treap_root == nullptr || right_treap_root == nullptr) {
         if (left_treap_root == nullptr) {
@@ -569,6 +570,8 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::inser
     }
 }
 
+
+
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::eraseHelper(Node*& root, const KeyType& key)
 {
@@ -578,7 +581,7 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::erase
     }
     else if(ptr->key == key) {
         auto temp = ptr;
-        mergeHelper(ptr,ptr->left_child,ptr->right_child);
+        mergeHelper(ptr->left_child,ptr->right_child);
         free(temp);
     }
     else {
@@ -590,6 +593,8 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::erase
         }
     }
 }
+
+
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::deleteHelper(Node*& node)

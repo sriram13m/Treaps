@@ -3,7 +3,6 @@
 
 #include <utility>
 #include <functional>
-#include <stdexcept>
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare = std::less<KeyType>, class PriorityCompare = std::less<PriorityType>>
@@ -30,7 +29,7 @@ private:
     void rightRotate(Node*);
 
     void splitHelper(Node*, const KeyType&);
-    Node* mergeHelper(Node*, Node*, Node*);
+    Node* mergeHelper(Node*, Node*);
 
     void insertHelper(Node*&, Node*);
     void eraseHelper(Node*&, const KeyType&);
