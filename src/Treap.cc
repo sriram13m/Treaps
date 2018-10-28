@@ -5,6 +5,7 @@ Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node
 
 
 
+
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node::Node(const Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::Node &other)
 {
@@ -336,6 +337,7 @@ template<typename KeyType, typename ValueType, typename PriorityType, class KeyC
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::insert(const KeyType &key, ValueType &&value, const PriorityType &priority)
 {
     insertHelper(root, new Node{key, std::move(value), priority, nullptr, nullptr, nullptr});
+    ++size;
 }
 
 
@@ -343,7 +345,9 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::inser
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
 void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::erase(const KeyType &key)
 {
+
     eraseHelper(root, key);
+    --size;
 }
 
 
@@ -369,6 +373,7 @@ ValueType& Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>:
 	}
 
 	throw "Element not found";
+
 }
 
 
@@ -609,4 +614,27 @@ void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::delet
         deleteHelper(node->right_child);
         delete node;
     }
+}
+
+template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare, class PriorityCompare>
+void Treap<KeyType, ValueType, PriorityType, KeyCompare, PriorityCompare>::levelorder()
+{
+    std::queue<Node*> queue;
+    queue.push(root);
+    auto node = root;
+    while(!queue.empty())
+    {
+        node = queue.front();
+        queue.pop();
+        std::cerr<<node->value<<" ";
+        if(node->left_child != nullptr){
+            queue.push(node->left_child);
+        }
+        if(node->right_child != nullptr) {
+            queue.push(node->right_child);
+        }
+
+
+    }
+
 }

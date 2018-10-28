@@ -3,6 +3,8 @@
 
 #include <utility>
 #include <functional>
+#include<iostream>
+#include <queue>
 
 
 template<typename KeyType, typename ValueType, typename PriorityType, class KeyCompare = std::less<KeyType>, class PriorityCompare = std::less<PriorityType>>
@@ -85,6 +87,8 @@ public:
     void insert(const KeyType&, ValueType&&, const PriorityType&);
     void erase(const KeyType&);
     ValueType& search(const KeyType&) const;
+
+    void levelorder();
 };
 
 

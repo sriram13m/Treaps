@@ -14,7 +14,9 @@ int main()
         switch (choice)
         {
         case 1:
+            cout<<"Enter key,value,priority"<<endl;
             cin >> key >> value >> priority;
+            cout<<"Inserted Successfully"<<endl;
             t.insert(key, int(value), priority);
             break;
         case 2:
@@ -31,6 +33,8 @@ int main()
             }
             break;
         case 4:
+            t.levelorder();
+        case 5:
             t1 = t;
             t2 = Treap<int, int, int>(t);
             break;
